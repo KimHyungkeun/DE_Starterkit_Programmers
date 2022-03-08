@@ -57,17 +57,21 @@ def load(**context):
     cur = get_Redshift_connection()
     lines = context["task_instance"].xcom_pull(key="return_value", task_ids="transform")
 
-    create_sql = """CREATE TABLE {schema}.{tmp} AS SELECT * FROM {schema}.{table};""".format(schema=schema, tmp = "temp_weather_forecast", table=table)
-    cur.execute(create_sql)
-    
     n = len(lines)
     for i in range(n):
         if lines[i] != '' :
             (dt, day, min, max) = lines[i].split(",")
             print(dt, "|", day, "|", min, "|", max)
-            sql = """INSERT INTO {schema}.{tmp}} VALUES ('{dt}', {day}, {min}, {max});""".format(schema=schema, tmp = "temp_weather_forecast", dt=dt, day=day, min=min, max=max)
+            sql = """INSERT INTO {schema}.{table} VALUES ('{dt}', {day}, {min}, {max});""".format(schema=schema, table=table, dt=dt, day=day, min=min, max=max)
             print(sql)
             cur.execute(sql)
+
+    create_sql = """CREATE TABLE {schema}.{tmp} ( LIKE {schema}.{table});""".format(schema=schema, tmp = "temp_weather_forecast", table=table)
+    insert_tmp_sql = """INSERT INTO {schema}.{tmp} (SELECT * FROM {schema}.{table});""".format(schema=schema, tmp = "temp_weather_forecast", table=table)
+    cur.execute(create_sql)
+    cur.execute(insert_tmp_sql)
+
+
     
     
     del_sql = """BEGIN;DELETE FROM {schema}.{table};""".format(schema=schema, table=table)
@@ -75,9 +79,14 @@ def load(**context):
                     FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY date ORDER BY created_date DESC) 
                     seq FROM {schema}.{tmp}) WHERE seq = 1;""".format(schema=schema, tmp = "temp_weather_forecast", table=table)
     
+    
     cur.execute(del_sql)
     cur.execute(insert_sql)
     cur.execute("END;")
+
+    drop_tmp_sql = """DROP TABLE {schema}.{tmp}""".format(schema=schema, tmp = "temp_weather_forecast")
+    cur.execute(drop_tmp_sql)
+
 
 
 
@@ -99,7 +108,7 @@ extract = PythonOperator(
     task_id = 'extract',
     python_callable = extract,
     params = {
-        'url':  "https://api.openweathermap.org/data/2.5/onecall?lat=37.532600&lon=127.024612&exclude=current,minutely,hourly,alerts&appid="+Variable.get("open_weather_api_key")
+        'url': Variable.get("open_weather_api_key")
     },
     provide_context=True,
     dag = dag_full_refresh)
