@@ -57,43 +57,24 @@ def load(**context):
     cur = get_Redshift_connection()
     lines = context["task_instance"].xcom_pull(key="return_value", task_ids="transform")
 
+    del_sql = """BEGIN;DELETE FROM {schema}.{table};""".format(schema=schema, table=table)
+    cur.execute(del_sql)
+
     n = len(lines)
-    for i in range(n):
+    for i in range(7):
         if lines[i] != '' :
             (dt, day, min, max) = lines[i].split(",")
-            print(dt, "|", day, "|", min, "|", max)
+            logging.info(dt, "|", day, "|", min, "|", max)
             sql = """INSERT INTO {schema}.{table} VALUES ('{dt}', {day}, {min}, {max});""".format(schema=schema, table=table, dt=dt, day=day, min=min, max=max)
-            print(sql)
+            logging.info(sql)
             cur.execute(sql)
-
-    create_sql = """CREATE TABLE {schema}.{tmp} ( LIKE {schema}.{table});""".format(schema=schema, tmp = "temp_weather_forecast", table=table)
-    insert_tmp_sql = """INSERT INTO {schema}.{tmp} (SELECT * FROM {schema}.{table});""".format(schema=schema, tmp = "temp_weather_forecast", table=table)
-    cur.execute(create_sql)
-    cur.execute(insert_tmp_sql)
-
-
     
-    
-    del_sql = """BEGIN;DELETE FROM {schema}.{table};""".format(schema=schema, table=table)
-    insert_sql = """INSERT INTO {schema}.{table} SELECT date, temp, min_temp, max_temp, created_date
-                    FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY date ORDER BY created_date DESC) 
-                    seq FROM {schema}.{tmp}) WHERE seq = 1;""".format(schema=schema, tmp = "temp_weather_forecast", table=table)
-    
-    
-    cur.execute(del_sql)
-    cur.execute(insert_sql)
     cur.execute("END;")
 
-    drop_tmp_sql = """DROP TABLE {schema}.{tmp}""".format(schema=schema, tmp = "temp_weather_forecast")
-    cur.execute(drop_tmp_sql)
-
-
-
-
-
+    
 dag_full_refresh = DAG(
-    dag_id = 'full_refresh_assignment',
-    start_date = datetime(2022,3,7), # 날짜가 미래인 경우 실행이 안됨
+    dag_id = 'assignment_full_refresh',
+    start_date = datetime(2022,3,8), # 날짜가 미래인 경우 실행이 안됨
     schedule_interval = '0 1 * * *',  # 적당히 조절
     catchup = False,
     max_active_runs = 1,
@@ -126,7 +107,7 @@ load = PythonOperator(
     python_callable = load,
     params = {
         'schema': 'hyungkeun_kim95',
-        'table': 'weather_forecast'
+        'table': 'weather_forecast_fullrefresh'
     },
     provide_context=True,
     dag = dag_full_refresh)
