@@ -55,15 +55,16 @@ def transform(**context):
 def load(**context):
     schema = context["params"]["schema"]
     table = context["params"]["table"]
+    tmp_table = "temp_weather_forecast"
     
     cur = get_Redshift_connection()
     lines = context["task_instance"].xcom_pull(key="return_value", task_ids="transform")
 
     # CTAS, CREATE TABLE LIKE을 해도 created_at의 default값을 반영하지 못하여 alter table 쿼리를 임시로 부여
-    create_sql = """CREATE TABLE {schema}.{tmp} ( LIKE {schema}.{table});""".format(schema=schema, tmp = "temp_weather_forecast", table=table)
+    create_sql = """CREATE TABLE {schema}.{tmp} ( LIKE {schema}.{table});""".format(schema=schema, tmp = tmp_table, table=table)
     alter_sql = """ALTER TABLE {schema}.{tmp} DROP COLUMN created_date;
-    ALTER TABLE {schema}.{tmp} ADD COLUMN created_date timestamp DEFAULT GETDATE();""".format(schema=schema, tmp = "temp_weather_forecast")
-    insert_tmp_sql = """INSERT INTO {schema}.{tmp} (SELECT * FROM {schema}.{table})""".format(schema=schema, tmp = "temp_weather_forecast", table=table)
+    ALTER TABLE {schema}.{tmp} ADD COLUMN created_date timestamp DEFAULT GETDATE();""".format(schema=schema, tmp = tmp_table)
+    insert_tmp_sql = """INSERT INTO {schema}.{tmp} (SELECT * FROM {schema}.{table})""".format(schema=schema, tmp = tmp_table, table=table)
 
     cur.execute(create_sql)
     cur.execute(alter_sql)
@@ -74,21 +75,21 @@ def load(**context):
         if lines[i] != '' :
             (dt, day, min, max) = lines[i].split(",")
             logging.info(dt, "|", day, "|", min, "|", max)
-            sql = """INSERT INTO {schema}.{tmp} VALUES ('{dt}', {day}, {min}, {max});""".format(schema=schema, tmp = "temp_weather_forecast", dt=dt, day=day, min=min, max=max)
+            sql = """INSERT INTO {schema}.{tmp} VALUES ('{dt}', {day}, {min}, {max});""".format(schema=schema, tmp = tmp_table, dt=dt, day=day, min=min, max=max)
             logging.info(sql)
             cur.execute(sql)
    
     del_sql = """BEGIN;DELETE FROM {schema}.{table};""".format(schema=schema, table=table)
     insert_sql = """INSERT INTO {schema}.{table} SELECT date, temp, min_temp, max_temp, created_date
                     FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY date ORDER BY created_date DESC) 
-                    seq FROM {schema}.{tmp}) WHERE seq = 1;""".format(schema=schema, tmp = "temp_weather_forecast", table=table)
+                    seq FROM {schema}.{tmp}) WHERE seq = 1;""".format(schema=schema, tmp = tmp_table, table=table)
     
     
     cur.execute(del_sql)
     cur.execute(insert_sql)
     cur.execute("END;")
 
-    drop_tmp_sql = """DROP TABLE {schema}.{tmp}""".format(schema=schema, tmp = "temp_weather_forecast")
+    drop_tmp_sql = """DROP TABLE {schema}.{tmp}""".format(schema=schema, tmp = tmp_table)
     cur.execute(drop_tmp_sql)
 
 
