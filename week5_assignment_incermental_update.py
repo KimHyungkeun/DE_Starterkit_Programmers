@@ -13,6 +13,7 @@ import requests
 # 서울의 위도, 경도 => https://www.latlong.net/place/seoul-south-korea-621.html
 
 # Redshift connection 함수
+# Redshift 비밀번호는 Variable에 저장
 def get_Redshift_connection():
     host = "learnde.cduaw970ssvt.ap-northeast-2.redshift.amazonaws.com"
     redshift_user = "hyungkeun_kim95"
@@ -29,7 +30,7 @@ def get_Redshift_connection():
     conn.set_session(autocommit=True)
     return conn.cursor()
 
-
+# weather_api를 Call하여 JSON 형식으로 읽어들인다 
 def extract(**context):
     link = context["params"]["url"]
     task_instance = context['task_instance']
@@ -40,6 +41,7 @@ def extract(**context):
     f_js = f.json()
     return f_js
 
+# JSON내의 내용 중, 일주일간의 날씨정보를 불러온다 (dt:날짜, day:낮기온, min:최저기온, max:최고기온)
 def transform(**context):
     json = context['task_instance'].xcom_pull(key="return_value", task_ids="extract")
     row = json['daily']
@@ -49,6 +51,7 @@ def transform(**context):
       ans.append(line)
     return ans
 
+# transform에서 필터링한 내용을 이용해서, 일주일간의 날씨정보를 RedShift DB에 저장한다.
 def load(**context):
     schema = context["params"]["schema"]
     table = context["params"]["table"]
