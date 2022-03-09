@@ -74,7 +74,7 @@ def load(**context):
     
 dag_full_refresh = DAG(
     dag_id = 'assignment_full_refresh',
-    start_date = datetime(2022,3,8), # 날짜가 미래인 경우 실행이 안됨
+    start_date = datetime(2022,3,9), # 날짜가 미래인 경우 실행이 안됨
     schedule_interval = '0 1 * * *',  # 적당히 조절
     catchup = False,
     max_active_runs = 1,

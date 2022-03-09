@@ -60,9 +60,11 @@ def load(**context):
     create_sql = """CREATE TABLE {schema}.{tmp} ( LIKE {schema}.{table});""".format(schema=schema, tmp = "temp_weather_forecast", table=table)
     alter_sql = """ALTER TABLE {schema}.{tmp} DROP COLUMN created_date;
     ALTER TABLE {schema}.{tmp} ADD COLUMN created_date timestamp DEFAULT GETDATE();""".format(schema=schema, tmp = "temp_weather_forecast")
+    insert_tmp_sql = """INSERT INTO {schema}.{tmp} (SELECT * FROM {schema}.{table})""".format(schema=schema, tmp = "temp_weather_forecast", table=table)
 
     cur.execute(create_sql)
     cur.execute(alter_sql)
+    cur.execute(insert_tmp_sql)
 
     n = len(lines)
     for i in range(7):
@@ -92,7 +94,7 @@ def load(**context):
 
 dag_incremental_update = DAG(
     dag_id = 'assignment_incremental_update',
-    start_date = datetime(2022,3,8), # 날짜가 미래인 경우 실행이 안됨
+    start_date = datetime(2022,3,9), # 날짜가 미래인 경우 실행이 안됨
     schedule_interval = '0 1 * * *',  # 적당히 조절
     catchup = False,
     max_active_runs = 1,
