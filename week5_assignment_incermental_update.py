@@ -14,7 +14,6 @@ import requests
 # 서울의 위도, 경도 => https://www.latlong.net/place/seoul-south-korea-621.html
 
 # Redshift connection 함수
-# Redshift 비밀번호는 Variable에 저장
 def get_Redshift_connection():
     hook = PostgresHook(postgres_conn_id='redshift_dev_db')
     return hook.get_conn().cursor()
