@@ -1,6 +1,7 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.models import Variable
+from airflow.hooks.postgres_hook import PostgresHook
 
 
 from datetime import datetime
@@ -15,20 +16,8 @@ import requests
 # Redshift connection 함수
 # Redshift 비밀번호는 Variable에 저장
 def get_Redshift_connection():
-    host = "learnde.cduaw970ssvt.ap-northeast-2.redshift.amazonaws.com"
-    redshift_user = "hyungkeun_kim95"
-    redshift_pass = Variable.get("redshift_pass")
-    port = 5439
-    dbname = "dev"
-    conn = psycopg2.connect("dbname={dbname} user={user} host={host} password={password} port={port}".format(
-        dbname=dbname,
-        user=redshift_user,
-        password=redshift_pass,
-        host=host,
-        port=port
-    ))
-    conn.set_session(autocommit=True)
-    return conn.cursor()
+    hook = PostgresHook(postgres_conn_id='redshift_dev_db')
+    return hook.get_conn().cursor()
 
 # weather_api를 Call하여 JSON 형식으로 읽어들인다 
 def extract(**context):
