@@ -48,7 +48,7 @@ def load(**context):
     cur = get_Redshift_connection()
     lines = context["task_instance"].xcom_pull(key="return_value", task_ids="transform")
 
-    # CTAS, CREATE TABLE LIKE을 해도 created_at의 default값을 반영하지 못하여 alter table 쿼리를 임시로 부여
+    # CREATE TABLE LIKE을 진행할때 INCLUDING DEFAULTS 옵션을 넣어서 Default값도 인식하도록 한다
     create_sql = """CREATE TABLE {schema}.{tmp} ( LIKE {schema}.{table} INCLUDING DEFAULTS);""".format(schema=schema, tmp = tmp_table, table=table)
     insert_tmp_sql = """INSERT INTO {schema}.{tmp} (SELECT * FROM {schema}.{table})""".format(schema=schema, tmp = tmp_table, table=table)
 
