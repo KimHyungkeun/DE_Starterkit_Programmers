@@ -49,13 +49,10 @@ def load(**context):
     lines = context["task_instance"].xcom_pull(key="return_value", task_ids="transform")
 
     # CTAS, CREATE TABLE LIKE을 해도 created_at의 default값을 반영하지 못하여 alter table 쿼리를 임시로 부여
-    create_sql = """CREATE TABLE {schema}.{tmp} ( LIKE {schema}.{table});""".format(schema=schema, tmp = tmp_table, table=table)
-    alter_sql = """ALTER TABLE {schema}.{tmp} DROP COLUMN created_date;
-    ALTER TABLE {schema}.{tmp} ADD COLUMN created_date timestamp DEFAULT GETDATE();""".format(schema=schema, tmp = tmp_table)
+    create_sql = """CREATE TABLE {schema}.{tmp} ( LIKE {schema}.{table} INCLUDING DEFAULTS);""".format(schema=schema, tmp = tmp_table, table=table)
     insert_tmp_sql = """INSERT INTO {schema}.{tmp} (SELECT * FROM {schema}.{table})""".format(schema=schema, tmp = tmp_table, table=table)
 
     cur.execute(create_sql)
-    cur.execute(alter_sql)
     cur.execute(insert_tmp_sql)
 
     n = len(lines)
