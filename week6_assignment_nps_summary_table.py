@@ -131,7 +131,7 @@ LEFT OUTER JOIN
 FROM hyungkeun_kim95.nps 
 WHERE score >= 0 AND score <= 6
 GROUP BY date) c 
-ON b.date = c.date;"""
+ON a.date = c.date;"""
     },
     provide_context = True,
     dag = dag
