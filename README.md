@@ -7,7 +7,7 @@
 
 
 [2. Week3 : 테이블 별 다양한 쿼리 과제 진행](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/week3_HW.ipynb)
- - Assignment 2 : 한 유저가 사이트를 접속하였을때, 해당 유저의 접속 timestamp기준으로 가장 먼저 접근했던 사이트와 가장 늦게 접근했던 사이트를 표시한다
+ - Assignment 2 : 한 유저의 접속 기록 중, 가장 먼저 접근했던 사이트와 가장 늦게 접근했던 사이트를 표시한다
 
 ![image](https://user-images.githubusercontent.com/12759500/159435023-2f732f49-714f-4d28-9fb7-188fe7e58e35.png)
 
@@ -15,7 +15,8 @@
   
  ![image](https://user-images.githubusercontent.com/12759500/159435046-30238150-ff7b-44d7-b67d-23053db42982.png)
 
- - Assignment 4 : 월별 접속한 사이트를 기준으로 접속한 유저(uniqueUsers), 광고비를 낸 유저(paidUser), 접속 유저 중 광고비 낸 유저의 비율(ConverseionRate), Gross Revenue, Net Revenue를 구한다
+ - Assignment 4 : 월별 접속한 사이트를 기준으로 접속한 유저(uniqueUsers), 광고비가 발생된 유저(paidUser), 접속 유저 중 광고비가 발생된 유저의 비율(ConverseionRate), 
+refund를 포함한 매출(Gross Revenue), refund를 제외한 매출(Net Revenue)를 구한다
  
 ![image](https://user-images.githubusercontent.com/12759500/159435074-f7a906ba-466b-45c2-bb63-b2891ec6a818.png)
 
