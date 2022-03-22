@@ -39,10 +39,10 @@ refund를 포함한 매출(Gross Revenue), refund를 제외한 매출(Net Revenu
  - 시작일이 새로 덮어씌워지는것이 아니라, 하루가 지날때마다 row가 하나씩 늘어나는 방식이다
  - ex) 9일 (9 ~ 15일) => 10일 (9 ~ 16일) => 11일 (9 ~ 17일). 하루 경과시 row가 1개씩 증가 
 
- (3/9 기준, weather_forecast_fullRefresh : 전체 새로고침 테이블, weather_forecast : 증분 업데이트 테이블) 
+ (3/9 기준, weather_forecast_fullrefresh : 전체 새로고침 테이블, weather_forecast : 증분 업데이트 테이블) 
  ![image](https://user-images.githubusercontent.com/12759500/159435456-9b3dfea2-529e-4d58-bb19-f69865d916e6.png)
  
- (3/10 기준, weather_forecast_fullRefresh : 전체 새로고침 테이블, weather_forecast : 증분 업데이트 테이블) 
+ (3/10 기준, weather_forecast_fullrefresh : 전체 새로고침 테이블, weather_forecast : 증분 업데이트 테이블) 
  ![image](https://user-images.githubusercontent.com/12759500/159435483-350d2606-17d0-407d-93da-428f9ca2b328.png)
 
 
