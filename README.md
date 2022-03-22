@@ -36,7 +36,7 @@
  [4-2) Week5 : 테이블 Incremental update 구현(Airflow DAG)](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/week5_assignment_incermental_update.py) 
  - 하루가 지날때마다, 지나간 하루를 시작점으로 하는 1주일간의 온도 정보를 불러온다.
  - 시작일이 새로 덮어씌워지는것이 아니라, 하루가 지날때마다 row가 하나씩 늘어나는 방식이다
- - ex) 9일 (9 ~ 15일) => 10일 (9 ~ 16일) => 1일 (9 ~ 17일). 하루 경과시 row가 1개씩 증가 
+ - ex) 9일 (9 ~ 15일) => 10일 (9 ~ 16일) => 11일 (9 ~ 17일). 하루 경과시 row가 1개씩 증가 
 
  (3/9 기준, weather_forecast_fullRefresh : 전체 새로고침 테이블, weather_forecast : 증분 업데이트 테이블) 
  ![image](https://user-images.githubusercontent.com/12759500/159435456-9b3dfea2-529e-4d58-bb19-f69865d916e6.png)
