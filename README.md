@@ -3,10 +3,12 @@
 [1. Week2 : 월별로 기록된 유저 수를 기록한 테이블](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/week2_HW.ipynb)  
  - 월별로 접속한 유저 들의 수를 기록한 테이블을 만들어 낸다
 
+![image](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/Pictures/week2_Pic.png)
 ![image](https://user-images.githubusercontent.com/12759500/159435190-e041b791-177b-4fda-a2d0-e98e799ebef9.png)
 
 
 [2. Week3 : 테이블 별 다양한 쿼리 과제 진행](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/week3_HW.ipynb)
+![image](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/Pictures/week3_Pic.png)
  - Assignment 2 : 한 유저의 접속 기록 중, 가장 먼저 접근했던 사이트와 가장 늦게 접근했던 사이트를 표시한다
 
 ![image](https://user-images.githubusercontent.com/12759500/159435023-2f732f49-714f-4d28-9fb7-188fe7e58e35.png)
@@ -28,6 +30,7 @@ refund를 포함한 매출(Gross Revenue), refund를 제외한 매출(Net Revenu
  - 테이블 Full Refresh를 구현한다.
  - 구현 방식은 기존 테이블 내용을 모두 Delete하고, 빈 테이블에 row별로 하나씩 INSERT 하는 방식이다.
  - 기존 테이블 내용을 Delete후, 새로 추가할 row갯수만큼 Insert 하므로 이 두가지 연산을 하나의 트랜잭션으로 묶는다
+![image](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/Pictures/week4_Pic.png)
 
 
  [4-1) Week5 : 테이블 Full Refresh 구현(Airflow DAG)](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/week5_assignment_full_refresh.py)
@@ -39,6 +42,8 @@ refund를 포함한 매출(Gross Revenue), refund를 제외한 매출(Net Revenu
  - 시작일이 새로 덮어씌워지는것이 아니라, 하루가 지날때마다 row가 하나씩 늘어나는 방식이다
  - ex) 9일 (9 ~ 15일) => 10일 (9 ~ 16일) => 11일 (9 ~ 17일). 하루 경과시 row가 1개씩 증가 
 
+![image](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/Pictures/week5_Pic.png)
+
  (3/9 기준, weather_forecast_fullrefresh : 전체 새로고침 테이블, weather_forecast : 증분 업데이트 테이블) 
  ![image](https://user-images.githubusercontent.com/12759500/159435456-9b3dfea2-529e-4d58-bb19-f69865d916e6.png)
  
@@ -49,6 +54,8 @@ refund를 포함한 매출(Gross Revenue), refund를 제외한 매출(Net Revenu
 [5. Week6 : 일별 nps 테이블 구현(Airflow DAG)](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/week6_assignment_nps_summary_table.py) 
  - 일별로 nps를 구하는 테이블이다
  - nps는 하루 중 9, 10점을 받은 비율에서 0~6점을 받은 비율을 제외한 값이다.
+
+ ![image](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/Pictures/week6_Pic.png)
  ![image](https://user-images.githubusercontent.com/12759500/159435579-c6c7a0d4-30f7-4a17-8d87-a4854cf80009.png)
 
 
