@@ -19,6 +19,9 @@
  
 ![image](https://user-images.githubusercontent.com/12759500/159435074-f7a906ba-466b-45c2-bb63-b2891ec6a818.png)
 
+![image](https://user-images.githubusercontent.com/12759500/159437292-5e0ebb5a-5d78-4b12-b951-c5e12c934f8d.png)
+
+
 
 [3. Week4 : 테이블 적재 코드 수정](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/week4_HW.ipynb) 
  - 테이블 Full Refresh를 구현한다.
