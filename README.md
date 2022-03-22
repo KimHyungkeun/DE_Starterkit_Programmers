@@ -16,7 +16,7 @@
 [4. Week5 : 테이블 Full Refresh 구현(Airflow DAG)](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/week5_assignment_full_refresh.py) 
  - 하루가 지날때마다, 지나간 하루를 시작점으로 하여 1주일간의 온도 정보를 불러온다.
 
-[5. Week5 : 테이블 Incremental update 구현(Airflow DAG](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/week5_assignment_incermental_update.py) 
+[5. Week5 : 테이블 Incremental update 구현(Airflow DAG)](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/week5_assignment_incermental_update.py) 
  - 하루가 지날때마다, 지나간 하루를 시작점으로 하는 1주일간의 온도 정보를 불러온다.
  - 시작일이 새로 덮어씌워지는것이 아니라, 하루가 지날때마다 row가 하나씩 늘어나는 방식이다
 
