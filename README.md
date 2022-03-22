@@ -4,7 +4,6 @@
  - 월별로 접속한 유저 들의 수를 기록한 테이블을 만들어 낸다
 
 ![image](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/Pictures/week2_Pic.png)
-![image](https://user-images.githubusercontent.com/12759500/159435190-e041b791-177b-4fda-a2d0-e98e799ebef9.png)
 
 
 [2. Week3 : 테이블 별 다양한 쿼리 과제 진행](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/week3_HW.ipynb)
