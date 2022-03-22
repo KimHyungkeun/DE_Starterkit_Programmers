@@ -51,7 +51,7 @@ refund를 포함한 매출(Gross Revenue), refund를 제외한 매출(Net Revenu
 
 
 [5. Week6 : 일별 nps 테이블 구현(Airflow DAG)](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/week6_assignment_nps_summary_table.py) 
- - 일별로 nps를 구하는 테이블이다
+ - 일별로 nps를 구하는 테이블이다. (NPS : Net Promoter Score, 순수 고객 추천 지수)
  - nps는 하루 중 9, 10점을 받은 비율에서 0~6점을 받은 비율을 제외한 값이다.
 
  ![image](https://github.com/KimHyungkeun/DE_Starterkit_Programmers/blob/main/Pictures/week6_Pic.png)
