@@ -11,7 +11,7 @@
 
 ![image](https://user-images.githubusercontent.com/12759500/159435023-2f732f49-714f-4d28-9fb7-188fe7e58e35.png)
 
- - Assignment 3 : Gross Revenue가 가장 큰 값을 찾는 과제. (매출을 낼 시 refund까지 모두 포함한 매출을 Gross Revenue라고 한다)
+ - Assignment 3 : Gross Revenue를 가장 많이 배출한 TOP 10을 추출. (매출을 낼 시 refund까지 모두 포함한 매출을 Gross Revenue라고 한다)
   
  ![image](https://user-images.githubusercontent.com/12759500/159435046-30238150-ff7b-44d7-b67d-23053db42982.png)
 
